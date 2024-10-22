@@ -1,0 +1,6 @@
+// cấu hình trình biên dịch compiler cơ bản
+{
+    "presets": [
+        "@babel/preset-env"
+    ]
+}
