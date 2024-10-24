@@ -13,9 +13,15 @@ module.exports = {
     */
     return queryInterface.bulkInsert('Users', [
       {
+        password: '123456', //plain text //need to hash before save to db
         firstName: 'John',
         lastName: 'Doe',
-        email: 'example@example.com',
+        email: 'admin@gmail.com',
+        roleid: 'ADMIN',
+        phoneNumber: '0909090909',
+        positionId: '1',
+        address: 'Ho Chi Minh',
+        gender: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
