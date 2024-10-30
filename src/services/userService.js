@@ -107,7 +107,7 @@ let deleteUserById = async (id) => {
             errCode: 1,
             message: 'Missing required parameters'
         }
-    }else if (id.toLowerCase() === 'all') {
+    }else if (id.toString().toLowerCase() === 'all') {
         return await db.User.destroy({
             where: {},
             truncate: true
