@@ -71,7 +71,17 @@ let createNewUser = async (data) => {
         }
     }
     data.password = hashPassword(data.password);
-    return await db.User.create(data);
+    return await db.User.create({
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        address: data.address,
+        phoneNumber: data.phoneNumber,
+        gender: data.gender,
+        roleId: data.role,
+        positionId: data.position
+    });
 }
 
 let updateUserData = async (data) => {
@@ -122,6 +132,30 @@ let deleteUserById = async (id) => {
     return await db.User.destroy({where: {id: id}});
 }
 
+let getAllCodes = async (type) => {   
+    try {
+        if (!type) {
+            return {
+                errCode: 1,
+                errMessage: 'Missing required parameters'
+            }
+        } 
+        let data = await db.Allcode.findAll({
+            where: {type: type}
+        });
+        return {
+            errCode: 0,
+            data
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            errCode: -1,
+            errMessage: 'Error from server'
+        }
+    }
+}
+
 let hashPassword = (password) => {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 }
@@ -132,5 +166,6 @@ export default {
     getAllUsers: getAllUsers,
     createNewUser: createNewUser,
     updateUserData: updateUserData,
-    deleteUserById: deleteUserById
+    deleteUserById: deleteUserById,
+    getAllCodes: getAllCodes
 }
