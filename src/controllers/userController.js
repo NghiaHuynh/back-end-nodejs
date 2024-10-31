@@ -38,11 +38,19 @@ let handleGetAllUsers = async (req, res) => {
 }
 
 let handleCreateNewUser = async (req, res) => {
-    let message = await userService.createNewUser(req.body);
+    let data = await userService.createNewUser(req.body);
+    // console.log("data create user: ",data);
+    if (data.errCode === 0) {
+        return res.status(200).json({
+            errCode: data.errCode,
+            message: data.message
+        });
+    }
     return res.status(200).json({
-        errCode: 0,
-        message: message
+        errCode: data.errCode,
+        message: data.message
     });
+    
 }
 
 let handleEditUser = async (req, res) => {

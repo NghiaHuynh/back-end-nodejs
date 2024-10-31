@@ -71,7 +71,7 @@ let createNewUser = async (data) => {
         }
     }
     data.password = hashPassword(data.password);
-    return await db.User.create({
+    await db.User.create({
         email: data.email,
         password: data.password,
         firstName: data.firstName,
@@ -82,6 +82,10 @@ let createNewUser = async (data) => {
         roleId: data.role,
         positionId: data.position
     });
+    return {
+        errCode: 0,
+        message: 'Create new user success!'
+    }
 }
 
 let updateUserData = async (data) => {
