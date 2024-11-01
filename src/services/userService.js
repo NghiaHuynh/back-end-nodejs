@@ -104,9 +104,12 @@ let updateUserData = async (data) => {
         user.lastName = data.lastName;
         user.address = data.address;
         user.phoneNumber = data.phoneNumber;
-        if (data.password) {
-            user.password = hashPassword(data.password);
-        }
+        user.gender = data.gender;
+        user.roleId = data.role;
+        user.positionId = data.position;
+        // if (data.password) {
+        //     user.password = hashPassword(data.password);
+        // }
     }
     await user.save();
     return {
