@@ -1,7 +1,8 @@
 const { Sequelize } = require('sequelize');
+const config = require(__dirname + '/../config/config.json');
 
 // Option 3: Passing parameters separately (other dialects)
-const sequelize = new Sequelize('nodejs', 'root', null, {
+const sequelize = new Sequelize(config.database, config.username, null, {
     host: 'localhost',
     dialect: 'mysql',
     logging: false

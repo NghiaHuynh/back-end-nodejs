@@ -80,7 +80,8 @@ let createNewUser = async (data) => {
         phoneNumber: data.phoneNumber,
         gender: data.gender,
         roleId: data.role,
-        positionId: data.position
+        positionId: data.position,
+        image: data.image
     });
     return {
         errCode: 0,
@@ -107,6 +108,10 @@ let updateUserData = async (data) => {
         user.gender = data.gender;
         user.roleId = data.role;
         user.positionId = data.position;
+        if(data.image){
+            user.image = data.image
+        }
+        
         // if (data.password) {
         //     user.password = hashPassword(data.password);
         // }
