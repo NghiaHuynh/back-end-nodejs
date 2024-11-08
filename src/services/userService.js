@@ -1,7 +1,5 @@
 const bcrypt = require('bcryptjs');
-import e from 'express';
 import db from '../models/index';
-import { raw } from 'body-parser';
 
 
 let handleUserLogin = async (email, password) => {
