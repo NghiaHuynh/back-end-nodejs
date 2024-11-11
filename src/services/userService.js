@@ -48,7 +48,7 @@ let getAllUsers = async (id) => {
     if (id.toLowerCase() === 'all') {
         return await db.User.findAll({
             attributes: {
-                exclude: ['password']
+                exclude: ['password', 'image']
             }
         });
     }

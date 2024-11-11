@@ -18,6 +18,43 @@ let getTopDoctorHomeService = async (limit) => {
     return users;
 }
 
+let getAllDoctors = async () => {
+    // console.log('getAllDoctors');
+    let users = await db.User.findAll({
+        where: {roleId: 'R2'},
+        attributes: {
+            exclude: ['password', 'image']
+        }
+    });
+    return users;
+}
+
+let saveDetailDoctor = async (data) => {
+    try {
+        if (!data.doctorId || !data.contentHTML || !data.contentMarkdown) {
+            return {
+                errCode: 2,
+                errMessage: 'Missing required parameters'
+            }
+        }
+        await db.Markdown.create({
+            contentHTML: data.contentHTML,
+            contentMarkdown: data.contentMarkdown,
+            description: data.description,
+            doctorId: data.doctorId
+        });
+        
+        return {
+            errCode: 0,
+            message: 'Save infor doctor succeed'
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export default {
-    getTopDoctorHomeService: getTopDoctorHomeService
+    getTopDoctorHomeService: getTopDoctorHomeService,
+    getAllDoctors: getAllDoctors,
+    saveDetailDoctor: saveDetailDoctor
 }
