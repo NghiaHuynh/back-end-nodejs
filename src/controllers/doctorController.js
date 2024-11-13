@@ -46,8 +46,18 @@ let saveDetailDoctor = async (req, res) => {
     }
 }
 
+let getDetailDoctorById = async (req, res) => {
+    try {
+        let infor = await doctorService.getDetailDoctorById(req.query.id);
+        return res.status(200).json(infor);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export default {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
-    saveDetailDoctor: saveDetailDoctor
+    saveDetailDoctor: saveDetailDoctor,
+    getDetailDoctorById: getDetailDoctorById
 }
