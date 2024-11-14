@@ -1,7 +1,7 @@
 import e from "express";
 import doctorService from "../services/doctorService";
 
-let getTopDoctorHome =  async (req, res) => {
+let getTopDoctorHome = async (req, res) => {
     let limit = req.query.limit;
     if (!limit) {
         limit = 10;
@@ -42,16 +42,28 @@ let saveDetailDoctor = async (req, res) => {
         let data = await doctorService.saveDetailDoctor(req.body);
         return res.status(200).json(data);
     } catch (error) {
-        console.log(error);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from server'
+        })
     }
 }
 
 let getDetailDoctorById = async (req, res) => {
     try {
-        let infor = await doctorService.getDetailDoctorById(req.query.id);
-        return res.status(200).json(infor);
+        if (!req.query.id) {
+            return res.status(200).json({
+                errCode: 1,
+                errMessage: 'Missing required parameters'
+            })
+        }
+        let data = await doctorService.getDetailDoctorById(req.query.id);
+        return res.status(200).json(data);
     } catch (error) {
-        console.log(error);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from server'
+        })
     }
 }
 

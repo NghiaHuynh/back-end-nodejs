@@ -54,30 +54,35 @@ let saveDetailDoctor = async (data) => {
 }
 
 let getDetailDoctorById = async (id) => {
-    try {
-        if (!id) {
-            return {
-                errCode: 2,
-                errMessage: 'Missing required parameters'
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.User.findOne({
+                where: {id: id},
+                attributes: {
+                    exclude: ['password']
+                },
+                include: [
+                    {model: db.Markdown, as: 'markdownData', attributes: ['description', 'contentHTML', 'contentMarkdown']},
+                    {model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi']},
+                    {model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi']}
+                ],
+                raw: true,
+                nest: true
+            });
+            if (data && data.image) {
+                data.image = new Buffer(data.image, 'base64').toString('binary');
             }
+            if (!data) {
+                data = {};
+            }
+            resolve({
+                errCode: 0,
+                data: data
+            });
+        } catch (error) {
+            reject(error);
         }
-        let infor = await db.User.findOne({
-            where: {id: id},
-            attributes: {
-                exclude: ['password', 'image']
-            },
-            include: [
-                {model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi']},
-                // {model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi']},
-                {model: db.Markdown, as: 'markdownData', attributes: ['description', 'contentHTML', 'contentMarkdown']}
-            ],
-            raw: false,
-            nest: true
-        });
-        return infor;
-    } catch (error) {
-        console.log(error);
-    }
+    })
 }
 
 export default {
